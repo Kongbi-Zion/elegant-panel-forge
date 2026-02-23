@@ -5,16 +5,16 @@ import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 
 const transactions = [
-  { id: "TX-10024501", amount: 450.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Jane Smith", rrn: "123456789012", terminalId: "T-001", center: "North Campus" },
-  { id: "TX-10024502", amount: 1200.0, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "John Doe", rrn: "123456789013", terminalId: "T-002", center: "South Campus" },
-  { id: "TX-10024503", amount: 3500.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Failed", servedBy: "Jane Smith", rrn: "123456789014", terminalId: "T-001", center: "North Campus" },
-  { id: "TX-10024504", amount: 950.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "John Doe", rrn: "123456789015", terminalId: "T-003", center: "East Campus" },
-  { id: "TX-10024505", amount: 2750.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789016", terminalId: "T-004", center: "West Campus" },
-  { id: "TX-10024506", amount: 180.5, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "Bob Wilson", rrn: "123456789017", terminalId: "T-005", center: "North Campus" },
-  { id: "TX-10024507", amount: 5000.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Completed", servedBy: "Jane Smith", rrn: "123456789018", terminalId: "T-001", center: "North Campus" },
-  { id: "TX-10024508", amount: 750.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "John Doe", rrn: "123456789019", terminalId: "T-002", center: "South Campus" },
-  { id: "TX-10024509", amount: 2200.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789020", terminalId: "T-003", center: "East Campus" },
-  { id: "TX-10024510", amount: 2750.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789016", terminalId: "T-004", center: "West Campus" },
+  { id: "TX-10024501", amount: 1500.0, service: "Traffic Infringement", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Sarah Johnson", rrn: "123456789012", terminalId: "T-001", center: "RTIA Head Office" },
+  { id: "TX-10024502", amount: 228.0, service: "Installment Payments", productType: "Credit Card", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "Michael Chen", rrn: "123456789013", terminalId: "T-002", center: "Pretoria Service Center" },
+  { id: "TX-10024503", amount: 3800.0, service: "Motor Vehicle License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "Sarah Johnson", rrn: "123456789014", terminalId: "T-001", center: "RTIA Head Office" },
+  { id: "TX-10024504", amount: 228.0, service: "Driver's License Renewal", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "David Williams", rrn: "123456789015", terminalId: "T-003", center: "Johannesburg Branch" },
+  { id: "TX-10024505", amount: 450.0, service: "Duplicate Learner's License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Emily Davis", rrn: "123456789016", terminalId: "T-004", center: "Cape Town Service Center" },
+  { id: "TX-10024506", amount: 320.0, service: "Learner's License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "James Wilson", rrn: "123456789017", terminalId: "T-005", center: "Durban Service Outlet" },
+  { id: "TX-10024507", amount: 850.0, service: "Traffic Infringement", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Sarah Johnson", rrn: "123456789018", terminalId: "T-001", center: "RTIA Head Office" },
+  { id: "TX-10024508", amount: 228.0, service: "Installment Payments", productType: "Credit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "Michael Chen", rrn: "123456789019", terminalId: "T-002", center: "Pretoria Service Center" },
+  { id: "TX-10024509", amount: 4200.0, service: "Motor Vehicle License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Emily Davis", rrn: "123456789020", terminalId: "T-003", center: "Johannesburg Branch" },
+  { id: "TX-10024510", amount: 228.0, service: "Driver's License Renewal", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "David Williams", rrn: "123456789016", terminalId: "T-004", center: "Cape Town Service Center" },
 ];
 
 const statusColors: Record<string, string> = {
@@ -52,7 +52,7 @@ const TransactionTable = () => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
-              {["Amount", "Service", "Product Type", "Transaction Date", "Status", "Served By", "RRN", "Terminal ID", "Center"].map(
+              {["Amount", "Service", "Product Type", "Transaction Date", "Status", "Served By", "RRN", "Terminal ID", "Service Outlet"].map(
                 (h) => (
                   <th
                     key={h}
@@ -108,7 +108,7 @@ const TransactionTable = () => {
       {/* Pagination */}
       <div className="flex items-center justify-between border-t border-border px-6 py-4">
         <p className="text-sm text-muted-foreground">
-          Showing 1 to 4 of 42 results
+          Showing 1 to 10 of 42 results
         </p>
         <div className="flex items-center gap-1">
           <Button variant="outline" size="sm" disabled>

@@ -6,14 +6,14 @@ import { Input } from "@/components/ui/input";
 import Sidebar from "@/components/Sidebar";
 
 const users = [
-  { id: "USR-001", name: "Thato Lebeya", email: "thatol@intellergy.co.za", role: "Admin", center: "North Campus", status: "Active", lastActive: "2024-05-24 09:30" },
-  { id: "USR-002", name: "Jane Smith", email: "jane.smith@intellergy.co.za", role: "Cashier", center: "North Campus", status: "Active", lastActive: "2024-05-24 08:45" },
-  { id: "USR-003", name: "John Doe", email: "john.doe@intellergy.co.za", role: "Cashier", center: "South Campus", status: "Active", lastActive: "2024-05-24 10:15" },
-  { id: "USR-004", name: "Alice Brown", email: "alice.brown@intellergy.co.za", role: "Supervisor", center: "West Campus", status: "Active", lastActive: "2024-05-24 07:20" },
-  { id: "USR-005", name: "Bob Wilson", email: "bob.wilson@intellergy.co.za", role: "Cashier", center: "East Campus", status: "Inactive", lastActive: "2024-05-23 16:30" },
-  { id: "USR-006", name: "Sarah Johnson", email: "sarah.j@intellergy.co.za", role: "Admin", center: "South Campus", status: "Active", lastActive: "2024-05-24 11:00" },
-  { id: "USR-007", name: "Michael Chen", email: "michael.c@intellergy.co.za", role: "Cashier", center: "North Campus", status: "Active", lastActive: "2024-05-24 09:45" },
-  { id: "USR-008", name: "Emily Davis", email: "emily.d@intellergy.co.za", role: "Supervisor", center: "East Campus", status: "Active", lastActive: "2024-05-24 08:00" },
+  { id: "USR-001", name: "Thato Lebeya", email: "thatol@intellergy.co.za", role: "Admin", serviceOutlet: "RTIA Head Office", status: "Active", lastActive: "2024-05-24 09:30" },
+  { id: "USR-002", name: "Sarah Johnson", email: "sarah.j@intellergy.co.za", role: "Cashier", serviceOutlet: "RTIA Head Office", status: "Active", lastActive: "2024-05-24 08:45" },
+  { id: "USR-003", name: "Michael Chen", email: "michael.c@intellergy.co.za", role: "Cashier", serviceOutlet: "Pretoria Service Center", status: "Active", lastActive: "2024-05-24 10:15" },
+  { id: "USR-004", name: "David Williams", email: "david.w@intellergy.co.za", role: "Supervisor", serviceOutlet: "Johannesburg Branch", status: "Active", lastActive: "2024-05-24 07:20" },
+  { id: "USR-005", name: "Emily Davis", email: "emily.d@intellergy.co.za", role: "Cashier", serviceOutlet: "Cape Town Service Center", status: "Inactive", lastActive: "2024-05-23 16:30" },
+  { id: "USR-006", name: "James Wilson", email: "james.w@intellergy.co.za", role: "Admin", serviceOutlet: "Durban Service Outlet", status: "Active", lastActive: "2024-05-24 11:00" },
+  { id: "USR-007", name: "Sarah Johnson", email: "sarah.j@intellergy.co.za", role: "Cashier", serviceOutlet: "RTIA Head Office", status: "Active", lastActive: "2024-05-24 09:45" },
+  { id: "USR-008", name: "Michael Chen", email: "michael.c@intellergy.co.za", role: "Supervisor", serviceOutlet: "Pretoria Service Center", status: "Active", lastActive: "2024-05-24 08:00" },
 ];
 
 const statusColors: Record<string, string> = {
@@ -87,7 +87,7 @@ const Users = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-border">
-                    {["User ID", "Name", "Email", "Role", "Center", "Status", "Last Active", "Actions"].map(
+                    {["User ID", "Name", "Email", "Role", "Service Outlet", "Status", "Last Active", "Actions"].map(
                       (h) => (
                         <th
                           key={h}
@@ -120,7 +120,7 @@ const Users = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-card-foreground group-hover:text-white">
-                        {user.center}
+                        {user.serviceOutlet}
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-block rounded-md px-2.5 py-1 text-xs font-medium ${statusColors[user.status]}`}>

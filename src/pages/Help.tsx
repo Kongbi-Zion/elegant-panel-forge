@@ -32,7 +32,6 @@ const faqs = [
 const supportChannels = [
   { icon: Phone, title: "Phone Support", value: "+27 11 123 4567", description: "Available Mon-Fri 8am-5pm" },
   { icon: Mail, title: "Email Support", value: "support@rtia.co.za", description: "Response within 24 hours" },
-  { icon: MessageCircle, title: "Live Chat", value: "Start Chat", description: "Available 24/7" },
 ];
 
 const resources = [

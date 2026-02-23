@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Dashboard", icon: Home, path: "/" },
+  // { label: "Dashboard", icon: Home, path: "/" },
+  { label: "Transactions", icon: Receipt, path: "/" },
   { label: "Users", icon: Users, path: "/users" },
-  { label: "Transactions", icon: Receipt, path: "/transactions" },
   { label: "Help Desk", icon: CircleHelp, path: "/help" },
 ];
 

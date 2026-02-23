@@ -1,11 +1,15 @@
-import { LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronLeft, Download, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Sidebar from "@/components/Sidebar";
 import SummaryCard from "@/components/SummaryCard";
+import TransactionTable from "@/components/TransactionTable";
 import { formatNumber, formatCurrency } from "@/lib/utils";
 
-const Dashboard = () => {
+const Index = () => {
+
+
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
@@ -32,65 +36,42 @@ const Dashboard = () => {
 
         {/* Content */}
         <main className="flex-1 p-8 space-y-8">
-          {/* Welcome Message */}
-          <div className="rounded-xl bg-primary p-6 text-primary-foreground">
-            <h1 className="text-xl font-semibold">Welcome Thato Lebeya, your role today is finance!</h1>
+         
+
+          {/* Summary cards */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
+            <SummaryCard
+              title="Total Approved"
+              value={formatCurrency(114302.8)}
+              subtitle="Approved transactions"
+              variant="blue"
+            />
+            <SummaryCard
+              title="Declined Transactions"
+              value={formatCurrency(18269.6)}
+              subtitle="Declined transactions"
+              variant="orange"
+            />
+            <SummaryCard
+              title="Success Rate"
+              value="91.57%"
+              subtitle="Transaction success rate"
+              variant="teal"
+            />
+            <SummaryCard
+              title="Avg. Transaction"
+              value={formatCurrency(306.97)}
+              subtitle="Average per transaction"
+              variant="blue"
+            />
           </div>
 
-          {/* General Ticket Statistics */}
-          <div>
-            <h2 className="text-lg font-semibold text-foreground mb-4">General Ticket Statistics</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              <SummaryCard
-                title="Total Tickets Generated"
-                value={formatNumber(3884, 0)}
-                subtitle="All generated tickets"
-                variant="blue"
-              />
-              <SummaryCard
-                title="Total Tickets Cancelled"
-                value={formatNumber(741, 0)}
-                subtitle="19%"
-                variant="orange"
-              />
-              <SummaryCard
-                title="Total Tickets Completed"
-                value={formatNumber(3143, 0)}
-                subtitle="81%"
-                variant="teal"
-              />
-            </div>
-          </div>
-
-          {/* User Performance */}
-          <div>
-            <h2 className="text-lg font-semibold text-foreground mb-4">User Performance</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              <div className="rounded-xl border border-border bg-card p-6">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                  Total Tickets by User
-                </h3>
-                <p className="mt-2 text-3xl font-bold text-card-foreground">{formatNumber(247, 0)}</p>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-6">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                  User Tickets Cancelled
-                </h3>
-                <p className="mt-2 text-3xl font-bold text-card-foreground">{formatNumber(12, 0)}</p>
-                <p className="mt-1 text-xs text-muted-foreground">4.9%</p>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-6">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                  User Tickets Served
-                </h3>
-                <p className="mt-2 text-3xl font-bold text-card-foreground">{formatNumber(235, 0)}</p>
-              </div>
-            </div>
-          </div>
+          {/* Transaction table */}
+          <TransactionTable />
         </main>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Index;
