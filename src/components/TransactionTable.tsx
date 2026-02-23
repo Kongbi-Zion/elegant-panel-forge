@@ -6,20 +6,21 @@ import { formatCurrency } from "@/lib/utils";
 
 const transactions = [
   { id: "TX-10024501", amount: 450.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Jane Smith", rrn: "123456789012", terminalId: "T-001", center: "North Campus" },
-  { id: "TX-10024502", amount: 1200.0, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Completed", servedBy: "John Doe", rrn: "123456789013", terminalId: "T-002", center: "South Campus" },
-  { id: "TX-10024503", amount: 3500.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Pending", servedBy: "Jane Smith", rrn: "123456789014", terminalId: "T-001", center: "North Campus" },
+  { id: "TX-10024502", amount: 1200.0, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "John Doe", rrn: "123456789013", terminalId: "T-002", center: "South Campus" },
+  { id: "TX-10024503", amount: 3500.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Failed", servedBy: "Jane Smith", rrn: "123456789014", terminalId: "T-001", center: "North Campus" },
   { id: "TX-10024504", amount: 950.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "John Doe", rrn: "123456789015", terminalId: "T-003", center: "East Campus" },
   { id: "TX-10024505", amount: 2750.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789016", terminalId: "T-004", center: "West Campus" },
-  { id: "TX-10024506", amount: 180.5, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Completed", servedBy: "Bob Wilson", rrn: "123456789017", terminalId: "T-005", center: "North Campus" },
+  { id: "TX-10024506", amount: 180.5, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "Bob Wilson", rrn: "123456789017", terminalId: "T-005", center: "North Campus" },
   { id: "TX-10024507", amount: 5000.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Completed", servedBy: "Jane Smith", rrn: "123456789018", terminalId: "T-001", center: "North Campus" },
   { id: "TX-10024508", amount: 750.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "John Doe", rrn: "123456789019", terminalId: "T-002", center: "South Campus" },
   { id: "TX-10024509", amount: 2200.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789020", terminalId: "T-003", center: "East Campus" },
+   { id: "TX-10024505", amount: 2750.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789016", terminalId: "T-004", center: "West Campus" },
 ];
 
 const statusColors: Record<string, string> = {
   Completed: "bg-success/10 text-success",
-  Pending: "bg-[hsl(var(--card-orange))]/10 text-[hsl(var(--card-orange))]",
   Failed: "bg-destructive/10 text-destructive",
+  Cancelled: "bg-[hsl(var(--card-orange))]/10 text-[hsl(var(--card-orange))]",
 };
 
 const TransactionTable = () => {
@@ -51,7 +52,7 @@ const TransactionTable = () => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
-              {["Amount", "Service", "Product Type", "Transaction Date", "Status", "Served By", "RRN", "Terminal ID", "Center", "Actions"].map(
+              {["Amount", "Service", "Product Type", "Transaction Date", "Status", "Served By", "RRN", "Terminal ID", "Center"].map(
                 (h) => (
                   <th
                     key={h}
@@ -67,18 +68,18 @@ const TransactionTable = () => {
             {transactions.map((tx) => (
               <tr
                 key={tx.id}
-                className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors"
+                className="group border-b border-border last:border-0 hover:bg-[hsl(var(--sidebar-accent))] transition-colors"
               >
-                <td className="px-6 py-4 text-sm font-semibold text-card-foreground">
+                <td className="px-6 py-4 text-sm font-semibold text-card-foreground group-hover:text-white">
                   {formatCurrency(tx.amount)}
                 </td>
-                <td className="px-6 py-4 text-sm text-card-foreground">
+                <td className="px-6 py-4 text-sm text-card-foreground group-hover:text-white">
                   {tx.service}
                 </td>
-                <td className="px-6 py-4 text-sm text-card-foreground">
+                <td className="px-6 py-4 text-sm text-card-foreground group-hover:text-white">
                   {tx.productType}
                 </td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">
+                <td className="px-6 py-4 text-sm text-muted-foreground group-hover:text-white/90">
                   {tx.transactionDate}
                 </td>
                 <td className="px-6 py-4">
@@ -86,22 +87,17 @@ const TransactionTable = () => {
                     {tx.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-sm text-card-foreground">
+                <td className="px-6 py-4 text-sm text-card-foreground group-hover:text-white">
                   {tx.servedBy}
                 </td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">
+                <td className="px-6 py-4 text-sm text-muted-foreground group-hover:text-white/90">
                   {tx.rrn}
                 </td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">
+                <td className="px-6 py-4 text-sm text-muted-foreground group-hover:text-white/90">
                   {tx.terminalId}
                 </td>
-                <td className="px-6 py-4 text-sm text-card-foreground">
+                <td className="px-6 py-4 text-sm text-card-foreground group-hover:text-white">
                   {tx.center}
-                </td>
-                <td className="px-6 py-4">
-                  <Button variant="ghost" size="icon" className="text-primary">
-                    <Eye className="h-4 w-4" />
-                  </Button>
                 </td>
               </tr>
             ))}

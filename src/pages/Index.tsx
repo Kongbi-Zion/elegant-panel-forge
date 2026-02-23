@@ -36,24 +36,30 @@ const Index = () => {
          
 
           {/* Summary cards */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
             <SummaryCard
-              title="Total Transactions"
-              value={formatNumber(42, 0)}
-              subtitle="Active transactions"
+              title="Total Approved"
+              value={formatCurrency(114302.8)}
+              subtitle="Approved transactions"
               variant="blue"
             />
             <SummaryCard
-              title="Total Amount"
-              value={formatCurrency(15450.0)}
-              subtitle="Sum of all sales"
+              title="Declined Transactions"
+              value={formatCurrency(18269.6)}
+              subtitle="Declined transactions"
+              variant="orange"
+            />
+            <SummaryCard
+              title="Success Rate"
+              value="91.57%"
+              subtitle="Transaction success rate"
               variant="teal"
             />
             <SummaryCard
-              title="Batch Status"
-              value="Pending"
-              subtitle="Awaiting supervisor approval"
-              variant="orange"
+              title="Avg. Transaction"
+              value={formatCurrency(306.97)}
+              subtitle="Average per transaction"
+              variant="blue"
             />
           </div>
 
