@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ChevronLeft, Download, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -7,6 +8,8 @@ import TransactionTable from "@/components/TransactionTable";
 import { formatNumber, formatCurrency } from "@/lib/utils";
 
 const Index = () => {
+
+
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />

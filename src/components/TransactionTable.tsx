@@ -14,7 +14,7 @@ const transactions = [
   { id: "TX-10024507", amount: 5000.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Completed", servedBy: "Jane Smith", rrn: "123456789018", terminalId: "T-001", center: "North Campus" },
   { id: "TX-10024508", amount: 750.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "John Doe", rrn: "123456789019", terminalId: "T-002", center: "South Campus" },
   { id: "TX-10024509", amount: 2200.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789020", terminalId: "T-003", center: "East Campus" },
-   { id: "TX-10024505", amount: 2750.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789016", terminalId: "T-004", center: "West Campus" },
+  { id: "TX-10024510", amount: 2750.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789016", terminalId: "T-004", center: "West Campus" },
 ];
 
 const statusColors: Record<string, string> = {
