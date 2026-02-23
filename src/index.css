@@ -13,11 +13,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 223 72% 52%;
+    --primary: 209 100% 28%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 44 30% 48%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 220 14% 96%;
     --muted-foreground: 220 9% 46%;
@@ -30,22 +30,22 @@
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 223 72% 52%;
+    --ring: 209 100% 28%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 220 9% 46%;
-    --sidebar-primary: 223 72% 52%;
+    --sidebar-primary: 209 100% 28%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 223 72% 96%;
-    --sidebar-accent-foreground: 223 72% 52%;
+    --sidebar-accent: 209 100% 96%;
+    --sidebar-accent-foreground: 209 100% 28%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 223 72% 52%;
+    --sidebar-ring: 209 100% 28%;
 
     /* Dashboard-specific tokens */
-    --card-blue: 223 72% 52%;
-    --card-blue-end: 210 78% 46%;
+    --card-blue: 209 100% 28%;
+    --card-blue-end: 210 100% 25%;
     --card-teal: 168 60% 48%;
     --card-teal-end: 180 55% 42%;
     --card-orange: 28 87% 55%;
@@ -53,7 +53,7 @@
 
     --badge-sale: 145 63% 42%;
     --badge-sale-foreground: 0 0% 100%;
-    --badge-visa: 223 72% 52%;
+    --badge-visa: 209 100% 28%;
     --badge-cash: 28 87% 55%;
     --badge-eft: 0 72% 55%;
 
@@ -68,10 +68,10 @@
     --card-foreground: 210 40% 98%;
     --popover: 222 47% 9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 223 72% 52%;
+    --primary: 209 100% 28%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 44 30% 48%;
+    --secondary-foreground: 0 0% 100%;
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
     --accent: 217 33% 17%;
@@ -80,15 +80,15 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217 33% 17%;
     --input: 217 33% 17%;
-    --ring: 213 27% 84%;
+    --ring: 209 100% 28%;
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 215 20% 65%;
-    --sidebar-primary: 223 72% 52%;
+    --sidebar-primary: 209 100% 28%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-accent: 44 30% 17%;
+    --sidebar-accent-foreground: 44 30% 98%;
     --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 223 72% 52%;
+    --sidebar-ring: 209 100% 28%;
   }
 }
 

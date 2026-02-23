@@ -2,18 +2,24 @@ import { useState } from "react";
 import { Eye, Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
 
 const transactions = [
-  { id: "TX-10024501", time: "08:42 AM", type: "Sale", method: "Visa Debit", methodBadge: "VISA", amount: 450.0 },
-  { id: "TX-10024502", time: "09:15 AM", type: "Sale", method: "Cash Payment", methodBadge: "CASH", amount: 1200.0 },
-  { id: "TX-10024503", time: "10:05 AM", type: "Sale", method: "Bank Transfer", methodBadge: "EFT", amount: 3500.0 },
-  { id: "TX-10024504", time: "11:30 AM", type: "Sale", method: "Visa Debit", methodBadge: "VISA", amount: 950.0 },
+  { id: "TX-10024501", amount: 450.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Jane Smith", rrn: "123456789012", terminalId: "T-001", center: "North Campus" },
+  { id: "TX-10024502", amount: 1200.0, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Completed", servedBy: "John Doe", rrn: "123456789013", terminalId: "T-002", center: "South Campus" },
+  { id: "TX-10024503", amount: 3500.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Pending", servedBy: "Jane Smith", rrn: "123456789014", terminalId: "T-001", center: "North Campus" },
+  { id: "TX-10024504", amount: 950.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "John Doe", rrn: "123456789015", terminalId: "T-003", center: "East Campus" },
+  { id: "TX-10024505", amount: 2750.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789016", terminalId: "T-004", center: "West Campus" },
+  { id: "TX-10024506", amount: 180.5, service: "Payment", productType: "Cash", transactionDate: "2024-05-24", status: "Completed", servedBy: "Bob Wilson", rrn: "123456789017", terminalId: "T-005", center: "North Campus" },
+  { id: "TX-10024507", amount: 5000.0, service: "Transfer", productType: "Bank Transfer", transactionDate: "2024-05-24", status: "Completed", servedBy: "Jane Smith", rrn: "123456789018", terminalId: "T-001", center: "North Campus" },
+  { id: "TX-10024508", amount: 750.0, service: "Payment", productType: "Debit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "John Doe", rrn: "123456789019", terminalId: "T-002", center: "South Campus" },
+  { id: "TX-10024509", amount: 2200.0, service: "Payment", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Alice Brown", rrn: "123456789020", terminalId: "T-003", center: "East Campus" },
 ];
 
-const badgeColors: Record<string, string> = {
-  VISA: "bg-primary/10 text-primary",
-  CASH: "bg-[hsl(var(--card-orange))]/10 text-[hsl(var(--card-orange))]",
-  EFT: "bg-destructive/10 text-destructive",
+const statusColors: Record<string, string> = {
+  Completed: "bg-success/10 text-success",
+  Pending: "bg-[hsl(var(--card-orange))]/10 text-[hsl(var(--card-orange))]",
+  Failed: "bg-destructive/10 text-destructive",
 };
 
 const TransactionTable = () => {
@@ -24,7 +30,7 @@ const TransactionTable = () => {
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-6 py-4">
         <h2 className="text-lg font-semibold text-card-foreground">
-          Transaction List (42)
+          Transaction History (42)
         </h2>
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -45,7 +51,7 @@ const TransactionTable = () => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
-              {["Transaction ID", "Time", "Type", "Payment Method", "Amount (R)", "Actions"].map(
+              {["Amount", "Service", "Product Type", "Transaction Date", "Status", "Served By", "RRN", "Terminal ID", "Center", "Actions"].map(
                 (h) => (
                   <th
                     key={h}
@@ -64,28 +70,33 @@ const TransactionTable = () => {
                 className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors"
               >
                 <td className="px-6 py-4 text-sm font-semibold text-card-foreground">
-                  {tx.id}
+                  {formatCurrency(tx.amount)}
+                </td>
+                <td className="px-6 py-4 text-sm text-card-foreground">
+                  {tx.service}
+                </td>
+                <td className="px-6 py-4 text-sm text-card-foreground">
+                  {tx.productType}
                 </td>
                 <td className="px-6 py-4 text-sm text-muted-foreground">
-                  {tx.time}
+                  {tx.transactionDate}
                 </td>
                 <td className="px-6 py-4">
-                  <span className="inline-block rounded-md bg-success/10 px-2.5 py-1 text-xs font-medium text-success">
-                    {tx.type}
+                  <span className={`inline-block rounded-md px-2.5 py-1 text-xs font-medium ${statusColors[tx.status]}`}>
+                    {tx.status}
                   </span>
                 </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`inline-block rounded px-1.5 py-0.5 text-[10px] font-bold ${badgeColors[tx.methodBadge]}`}
-                    >
-                      {tx.methodBadge}
-                    </span>
-                    <span className="text-sm text-card-foreground">{tx.method}</span>
-                  </div>
+                <td className="px-6 py-4 text-sm text-card-foreground">
+                  {tx.servedBy}
                 </td>
-                <td className="px-6 py-4 text-sm font-semibold text-card-foreground">
-                  R {tx.amount.toLocaleString("en-ZA", { minimumFractionDigits: 2 })}
+                <td className="px-6 py-4 text-sm text-muted-foreground">
+                  {tx.rrn}
+                </td>
+                <td className="px-6 py-4 text-sm text-muted-foreground">
+                  {tx.terminalId}
+                </td>
+                <td className="px-6 py-4 text-sm text-card-foreground">
+                  {tx.center}
                 </td>
                 <td className="px-6 py-4">
                   <Button variant="ghost" size="icon" className="text-primary">
