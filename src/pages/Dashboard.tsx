@@ -12,11 +12,13 @@ const Index = () => {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar />
+      <div className="fixed left-0 top-0 h-full z-50">
+        <Sidebar />
+      </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col ml-60">
         {/* Top bar */}
-        <header className="flex items-center justify-between border-b border-border bg-card px-8 py-4">
+        <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border bg-card px-8 py-4">
           <div></div>
           <div className="flex items-center gap-4">
             <div className="text-right">
