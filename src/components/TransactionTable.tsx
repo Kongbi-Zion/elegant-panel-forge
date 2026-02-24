@@ -5,21 +5,21 @@ import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 
 const transactions = [
-  { id: "TX-10024501", amount: 1500.0, service: "Traffic Infringement", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Sarah Johnson", rrn: "123456789012", terminalId: "T-001", center: "RTIA Head Office" },
-  { id: "TX-10024502", amount: 228.0, service: "Installment Payments", productType: "Credit Card", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "Michael Chen", rrn: "123456789013", terminalId: "T-002", center: "Pretoria Service Center" },
-  { id: "TX-10024503", amount: 3800.0, service: "Motor Vehicle License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "Sarah Johnson", rrn: "123456789014", terminalId: "T-001", center: "RTIA Head Office" },
-  { id: "TX-10024504", amount: 228.0, service: "Driver's License Renewal", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "David Williams", rrn: "123456789015", terminalId: "T-003", center: "Johannesburg Branch" },
-  { id: "TX-10024505", amount: 450.0, service: "Duplicate Learner's License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Emily Davis", rrn: "123456789016", terminalId: "T-004", center: "Cape Town Service Center" },
-  { id: "TX-10024506", amount: 320.0, service: "Learner's License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "James Wilson", rrn: "123456789017", terminalId: "T-005", center: "Durban Service Outlet" },
-  { id: "TX-10024507", amount: 850.0, service: "Traffic Infringement", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Sarah Johnson", rrn: "123456789018", terminalId: "T-001", center: "RTIA Head Office" },
-  { id: "TX-10024508", amount: 228.0, service: "Installment Payments", productType: "Credit Card", transactionDate: "2024-05-24", status: "Failed", servedBy: "Michael Chen", rrn: "123456789019", terminalId: "T-002", center: "Pretoria Service Center" },
-  { id: "TX-10024509", amount: 4200.0, service: "Motor Vehicle License", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "Emily Davis", rrn: "123456789020", terminalId: "T-003", center: "Johannesburg Branch" },
-  { id: "TX-10024510", amount: 228.0, service: "Driver's License Renewal", productType: "Credit Card", transactionDate: "2024-05-24", status: "Completed", servedBy: "David Williams", rrn: "123456789016", terminalId: "T-004", center: "Cape Town Service Center" },
+  { id: "TX-10024501", amount: 1500.0, service: "Traffic Infringement", cardType: "Credit Card", transactionDate: "2024-05-24", status: "Approved", servedBy: "Sarah Johnson", rrn: "123456789012", terminalId: "T-001", center: "RTIA Head Office" },
+  { id: "TX-10024502", amount: 228.0, service: "Installment Payments", cardType: "Debit Card", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "Michael Chen", rrn: "123456789013", terminalId: "T-002", center: "Pretoria Service Center" },
+  { id: "TX-10024503", amount: 3800.0, service: "Motor Vehicle License", cardType: "Credit Card", transactionDate: "2024-05-24", status: "Declined", servedBy: "Sarah Johnson", rrn: "123456789014", terminalId: "T-001", center: "RTIA Head Office" },
+  { id: "TX-10024504", amount: 228.0, service: "Driver's License Renewal", cardType: "Debit Card", transactionDate: "2024-05-24", status: "Approved", servedBy: "David Williams", rrn: "123456789015", terminalId: "T-003", center: "Johannesburg Branch" },
+  { id: "TX-10024505", amount: 450.0, service: "Duplicate Learner's License", cardType: "Credit Card", transactionDate: "2024-05-24", status: "Approved", servedBy: "Emily Davis", rrn: "123456789016", terminalId: "T-004", center: "Cape Town Service Center" },
+  { id: "TX-10024506", amount: 320.0, service: "Learner's License", cardType: "Debit Card", transactionDate: "2024-05-24", status: "Cancelled", servedBy: "James Wilson", rrn: "123456789017", terminalId: "T-005", center: "Durban Service Outlet" },
+  { id: "TX-10024507", amount: 850.0, service: "Traffic Infringement", cardType: "Credit Card", transactionDate: "2024-05-24", status: "Approved", servedBy: "Sarah Johnson", rrn: "123456789018", terminalId: "T-001", center: "RTIA Head Office" },
+  { id: "TX-10024508", amount: 228.0, service: "Installment Payments", cardType: "Debit Card", transactionDate: "2024-05-24", status: "Declined", servedBy: "Michael Chen", rrn: "123456789019", terminalId: "T-002", center: "Pretoria Service Center" },
+  { id: "TX-10024509", amount: 4200.0, service: "Motor Vehicle License", cardType: "Credit Card", transactionDate: "2024-05-24", status: "Approved", servedBy: "Emily Davis", rrn: "123456789020", terminalId: "T-003", center: "Johannesburg Branch" },
+  { id: "TX-10024510", amount: 228.0, service: "Driver's License Renewal", cardType: "Debit Card", transactionDate: "2024-05-24", status: "Approved", servedBy: "David Williams", rrn: "123456789016", terminalId: "T-004", center: "Cape Town Service Center" },
 ];
 
 const statusColors: Record<string, string> = {
-  Completed: "bg-success/10 text-success",
-  Failed: "bg-destructive/10 text-destructive",
+  Approved: "bg-success/10 text-success",
+  Declined: "bg-destructive/10 text-destructive",
   Cancelled: "bg-[hsl(var(--card-orange))]/10 text-[hsl(var(--card-orange))]",
 };
 
@@ -52,7 +52,7 @@ const TransactionTable = () => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
-              {["Amount", "Service", "Product Type", "Transaction Date", "Status", "Served By", "RRN", "Terminal ID", "Service Outlet"].map(
+              {["Amount", "Service", "Card Type", "Transaction Date", "Status", "Served By", "RRN", "Terminal ID", "Service Outlet"].map(
                 (h) => (
                   <th
                     key={h}
@@ -77,7 +77,7 @@ const TransactionTable = () => {
                   {tx.service}
                 </td>
                 <td className="px-6 py-4 text-sm text-card-foreground group-hover:text-white">
-                  {tx.productType}
+                  {tx.cardType}
                 </td>
                 <td className="px-6 py-4 text-sm text-muted-foreground group-hover:text-white/90">
                   {tx.transactionDate}
