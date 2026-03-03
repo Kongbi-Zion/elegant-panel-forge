@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LogOut, Search, Phone, Mail, MessageCircle, ChevronDown, ChevronUp, FileText, Video, Headphones, Ticket, HelpCircle, Clock, User, AlertCircle } from "lucide-react";
+import { LogOut, Search, Phone, Mail, MessageCircle, ChevronDown, ChevronUp, FileText, Video, Headphones, Ticket, HelpCircle, Clock, User, AlertCircle, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
@@ -47,7 +47,7 @@ const initialTickets = [
     status: "open",
     priority: "high",
     created: "2024-03-15T10:30:00",
-    assignedTo: "John Doe",
+    assignedTo: "Intellergy Support",
     category: "Traffic Infringement"
   },
   {
@@ -57,7 +57,7 @@ const initialTickets = [
     status: "in-progress",
     priority: "medium",
     created: "2024-03-14T14:20:00",
-    assignedTo: "Jane Smith",
+    assignedTo: "Intellergy Support",
     category: "Installment Payments"
   },
   {
@@ -67,7 +67,7 @@ const initialTickets = [
     status: "resolved",
     priority: "low",
     created: "2024-03-13T09:15:00",
-    assignedTo: "Mike Johnson",
+    assignedTo: "Intellergy Support",
     category: "Account Access"
   },
   {
@@ -77,7 +77,7 @@ const initialTickets = [
     status: "open",
     priority: "high",
     created: "2024-03-15T11:45:00",
-    assignedTo: "Sarah Wilson",
+    assignedTo: "Intellergy Support",
     category: "Card Issues"
   },
   {
@@ -87,7 +87,7 @@ const initialTickets = [
     status: "in-progress",
     priority: "medium",
     created: "2024-03-12T16:30:00",
-    assignedTo: "Tom Brown",
+    assignedTo: "Intellergy Support",
     category: "Driver's License Renewal"
   }
 ];
@@ -97,13 +97,15 @@ const Help = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showNewTicketModal, setShowNewTicketModal] = useState(false);
+  const [showViewTicketModal, setShowViewTicketModal] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState<any>(null);
   const [tickets, setTickets] = useState(initialTickets);
   const [newTicket, setNewTicket] = useState({
     title: "",
     description: "",
     category: "Traffic Infringement",
     priority: "medium",
-    assignedTo: ""
+    assignedTo: "Intellergy Support"
   });
 
   const toggleFaq = (index: number) => {
@@ -128,7 +130,7 @@ const Help = () => {
       status: "open",
       priority: newTicket.priority,
       created: new Date().toISOString(),
-      assignedTo: "Unassigned",
+      assignedTo: "Intellergy Support",
       category: newTicket.category
     };
 
@@ -138,7 +140,7 @@ const Help = () => {
       description: "",
       category: "Traffic Infringement",
       priority: "medium",
-      assignedTo: ""
+      assignedTo: "Intellergy Support"
     });
     setShowNewTicketModal(false);
   };
@@ -148,6 +150,17 @@ const Help = () => {
       ...prev,
       [field]: value
     }));
+  };
+
+  const handleViewTicket = (ticket: any) => {
+    setSelectedTicket(ticket);
+    setShowViewTicketModal(true);
+  };
+
+  const handleStatusChange = (ticketId: string, newStatus: string) => {
+    setTickets(prev => prev.map(ticket => 
+      ticket.id === ticketId ? { ...ticket, status: newStatus } : ticket
+    ));
   };
 
   const getTicketStats = () => {
@@ -435,21 +448,18 @@ const Help = () => {
                   <table className="w-full">
                     <thead className="bg-muted/50">
                       <tr>
-                        <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Ticket ID</th>
                         <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Title</th>
                         <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Category</th>
                         <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Status</th>
                         <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Priority</th>
                         <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Assigned To</th>
                         <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Created</th>
+                        <th className="text-left py-3 px-4 font-medium text-sm text-foreground">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
                       {tickets.map((ticket) => (
-                        <tr key={ticket.id} className="hover:bg-muted/30 transition-colors">
-                          <td className="py-3 px-4">
-                            <span className="font-mono text-sm font-medium text-primary">{ticket.id}</span>
-                          </td>
+                        <tr key={ticket.id} className="hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => handleViewTicket(ticket)}>
                           <td className="py-3 px-4">
                             <div>
                               <p className="font-medium text-foreground">{ticket.title}</p>
@@ -479,6 +489,55 @@ const Help = () => {
                           </td>
                           <td className="py-3 px-4">
                             <span className="text-sm text-muted-foreground">{formatDate(ticket.created)}</span>
+                          </td>
+                          <td className="py-3 px-4" onClick={(e) => e.stopPropagation()}>
+                            <div className="relative">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  e.currentTarget.nextElementSibling?.classList.toggle('hidden');
+                                }}
+                              >
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                              <div className="hidden absolute right-0 top-full mt-1 w-48 bg-popover border border-border rounded-md shadow-lg z-10">
+                                <div className="py-1">
+                                  <button
+                                    className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleStatusChange(ticket.id, 'open');
+                                      e.currentTarget.closest('.relative')?.querySelector('.hidden')?.classList.add('hidden');
+                                    }}
+                                  >
+                                    Mark as Open
+                                  </button>
+                                  <button
+                                    className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleStatusChange(ticket.id, 'in-progress');
+                                      e.currentTarget.closest('.relative')?.querySelector('.hidden')?.classList.add('hidden');
+                                    }}
+                                  >
+                                    Mark as In Progress
+                                  </button>
+                                  <button
+                                    className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleStatusChange(ticket.id, 'resolved');
+                                      e.currentTarget.closest('.relative')?.querySelector('.hidden')?.classList.add('hidden');
+                                    }}
+                                  >
+                                    Mark as Resolved
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -582,6 +641,115 @@ const Help = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Create Ticket
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* View Ticket Modal */}
+      {showViewTicketModal && selectedTicket && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowViewTicketModal(false)} />
+          <div className="relative bg-card rounded-xl border border-border shadow-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-6 border-b border-border">
+              <h3 className="text-lg font-semibold text-foreground">Ticket Details</h3>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowViewTicketModal(false)}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <ChevronUp className="h-4 w-4 rotate-45" />
+              </Button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Ticket Header */}
+              <div className="flex items-start justify-between">
+                <div>
+                  <h4 className="text-xl font-semibold text-foreground mb-2">{selectedTicket.title}</h4>
+                  <p className="text-sm text-muted-foreground">Ticket ID: {selectedTicket.id}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(selectedTicket.status)}`}>
+                    {selectedTicket.status.replace('-', ' ')}
+                  </span>
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(selectedTicket.priority)}`}>
+                    {selectedTicket.priority}
+                  </span>
+                </div>
+              </div>
+
+              {/* Ticket Details Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Category</label>
+                  <p className="text-sm text-foreground mt-1">{selectedTicket.category}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Intellergy Support</label>
+                  <div className="flex items-center gap-2 mt-1">
+                    <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center">
+                      <User className="h-3 w-3 text-primary" />
+                    </div>
+                    <span className="text-sm text-foreground">{selectedTicket.assignedTo}</span>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Created Date</label>
+                  <p className="text-sm text-foreground mt-1">{formatDate(selectedTicket.created)}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Last Updated</label>
+                  <p className="text-sm text-foreground mt-1">{formatDate(selectedTicket.created)}</p>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Description</label>
+                <div className="mt-2 p-4 bg-muted/30 rounded-lg">
+                  <p className="text-sm text-foreground">{selectedTicket.description}</p>
+                </div>
+              </div>
+
+              {/* Status Update */}
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Update Status</label>
+                <div className="flex gap-2 mt-2">
+                  <Button
+                    variant={selectedTicket.status === 'open' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleStatusChange(selectedTicket.id, 'open')}
+                  >
+                    Open
+                  </Button>
+                  <Button
+                    variant={selectedTicket.status === 'in-progress' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleStatusChange(selectedTicket.id, 'in-progress')}
+                  >
+                    In Progress
+                  </Button>
+                  <Button
+                    variant={selectedTicket.status === 'resolved' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleStatusChange(selectedTicket.id, 'resolved')}
+                  >
+                    Resolved
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 p-6 border-t border-border">
+              <Button
+                variant="outline"
+                onClick={() => setShowViewTicketModal(false)}
+                className="border-border text-foreground hover:bg-secondary"
+              >
+                Close
               </Button>
             </div>
           </div>
