@@ -1,13 +1,39 @@
 import { useEffect, useState } from "react";
-import { ChevronLeft, Download, LogOut } from "lucide-react";
+import { ChevronLeft, Download, LogOut, Filter, X, Calendar, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Input } from "@/components/ui/input";
 import Sidebar from "@/components/Sidebar";
 import SummaryCard from "@/components/SummaryCard";
 import TransactionTable from "@/components/TransactionTable";
 import { formatNumber, formatCurrency } from "@/lib/utils";
 
 const Index = () => {
+  // Filter states
+  const [showFilters, setShowFilters] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedService, setSelectedService] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedCardType, setSelectedCardType] = useState("");
+  const [selectedCenter, setSelectedCenter] = useState("");
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
+
+  // Filter options based on transaction data
+  const services = ["Traffic Infringement", "Installment Payments", "Motor Vehicle License", "Driver's License Renewal", "Duplicate Learner's License", "Learner's License"];
+  const statuses = ["Approved", "Declined", "Cancelled"];
+  const cardTypes = ["Credit Card", "Debit Card"];
+  const centers = ["RTIA Head Office", "Pretoria Service Center", "Johannesburg Branch", "Cape Town Service Center", "Durban Service Outlet"];
+
+  const clearAllFilters = () => {
+    setSearchTerm("");
+    setSelectedService("");
+    setSelectedStatus("");
+    setSelectedCardType("");
+    setSelectedCenter("");
+    setDateRange({ start: "", end: "" });
+  };
+
+  const hasActiveFilters = searchTerm || selectedService || selectedStatus || selectedCardType || selectedCenter || dateRange.start || dateRange.end;
 
 
   return (
@@ -68,8 +94,178 @@ const Index = () => {
             />
           </div>
 
-          {/* Transaction table */}
-          <TransactionTable />
+          {/* Filters Section */}
+          <div className="space-y-4">
+            {/* Filter Header */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Button
+                  variant={showFilters ? "default" : "outline"}
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="flex items-center gap-2"
+                >
+                  <Filter className="h-4 w-4" />
+                  Filters
+                  {hasActiveFilters && (
+                    <span className="bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs">
+                      {[selectedService, selectedStatus, selectedCardType, selectedCenter, dateRange.start].filter(Boolean).length}
+                    </span>
+                  )}
+                </Button>
+                {hasActiveFilters && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="h-4 w-4 mr-1" />
+                    Clear All
+                  </Button>
+                )}
+              </div>
+              
+              {/* Quick Search */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="Search transactions by ID, service, amount..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-64 pl-9"
+                />
+              </div>
+            </div>
+
+            {/* Filter Options */}
+            {showFilters && (
+              <div className="rounded-xl border border-border bg-card p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Service Filter */}
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Service</label>
+                    <select
+                      value={selectedService}
+                      onChange={(e) => setSelectedService(e.target.value)}
+                      className="w-full p-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                      <option value="">All Services</option>
+                      {services.map((service) => (
+                        <option key={service} value={service}>{service}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Status Filter */}
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Status</label>
+                    <select
+                      value={selectedStatus}
+                      onChange={(e) => setSelectedStatus(e.target.value)}
+                      className="w-full p-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                      <option value="">All Statuses</option>
+                      {statuses.map((status) => (
+                        <option key={status} value={status}>{status}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Card Type Filter */}
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Card Type</label>
+                    <select
+                      value={selectedCardType}
+                      onChange={(e) => setSelectedCardType(e.target.value)}
+                      className="w-full p-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                      <option value="">All Card Types</option>
+                      {cardTypes.map((cardType) => (
+                        <option key={cardType} value={cardType}>{cardType}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Service Center Filter */}
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Service Center</label>
+                    <select
+                      value={selectedCenter}
+                      onChange={(e) => setSelectedCenter(e.target.value)}
+                      className="w-full p-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                      <option value="">All Centers</option>
+                      {centers.map((center) => (
+                        <option key={center} value={center}>{center}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Date Range Filter */}
+                  <div className="lg:col-span-2">
+                    <label className="text-sm font-medium text-foreground mb-2 block">Date Range</label>
+                    <div className="flex items-center gap-2">
+                      <div className="relative flex-1">
+                        <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                          type="date"
+                          value={dateRange.start}
+                          onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
+                          className="pl-9"
+                        />
+                      </div>
+                      <span className="text-muted-foreground">to</span>
+                      <div className="relative flex-1">
+                        <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                          type="date"
+                          value={dateRange.end}
+                          onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
+                          className="pl-9"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Active Filters Display */}
+                {hasActiveFilters && (
+                  <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
+                    {selectedService && (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                        Service: {selectedService}
+                        <X className="h-3 w-3 cursor-pointer" onClick={() => setSelectedService("")} />
+                      </span>
+                    )}
+                    {selectedStatus && (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                        Status: {selectedStatus}
+                        <X className="h-3 w-3 cursor-pointer" onClick={() => setSelectedStatus("")} />
+                      </span>
+                    )}
+                    {selectedCardType && (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                        Card: {selectedCardType}
+                        <X className="h-3 w-3 cursor-pointer" onClick={() => setSelectedCardType("")} />
+                      </span>
+                    )}
+                    {selectedCenter && (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                        Center: {selectedCenter}
+                        <X className="h-3 w-3 cursor-pointer" onClick={() => setSelectedCenter("")} />
+                      </span>
+                    )}
+                    {(dateRange.start || dateRange.end) && (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                        Date: {dateRange.start || "Start"} - {dateRange.end || "End"}
+                        <X className="h-3 w-3 cursor-pointer" onClick={() => setDateRange({ start: "", end: "" })} />
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </main>
       </div>
     </div>
