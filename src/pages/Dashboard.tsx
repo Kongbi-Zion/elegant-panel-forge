@@ -173,15 +173,15 @@ const Index = () => {
                     </select>
                   </div>
 
-                  {/* Service Center Filter */}
+                  {/* Service Outlet Filter */}
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">Service Center</label>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Service Outlet</label>
                     <select
                       value={selectedCenter}
                       onChange={(e) => setSelectedCenter(e.target.value)}
                       className="w-full p-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     >
-                      <option value="">All Centers</option>
+                      <option value="">All Outlets</option>
                       {centers.map((center) => (
                         <option key={center} value={center}>{center}</option>
                       ))}
@@ -238,7 +238,7 @@ const Index = () => {
                     )}
                     {selectedCenter && (
                       <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
-                        Center: {selectedCenter}
+                        Outlet: {selectedCenter}
                         <X className="h-3 w-3 cursor-pointer" onClick={() => setSelectedCenter("")} />
                       </span>
                     )}
